@@ -42,7 +42,7 @@ MorpheusERP é um sistema completo de gestão empresarial (ERP) desenvolvido esp
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/MorpheusERP.git
+git clone https://github.com/iury-hilario/MorpheusERP.git
 cd MorpheusERP
 ```
 
