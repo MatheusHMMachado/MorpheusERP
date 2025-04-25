@@ -16,9 +16,9 @@ use App\Http\Controllers\Relatorio\RelatorioUsuarioController;
 use App\Http\Controllers\Relatorio\RelatorioSaidaController;
 
 // Rota inicial redirecionando para o home
-Route::get('/', function () {
+Route::get('/redirect-to-login', function () {
     return redirect()->route('login');
-})->name('login');
+})->name('auth.login');
 
 // Rotas de autenticação
 Route::get('/login', function () {
