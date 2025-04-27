@@ -410,12 +410,11 @@
             
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             
-            fetch('/home/produtos/search?termo=' + encodeURIComponent(termo), {
+            fetch(`/produtos/search?termo=${encodeURIComponent(termo)}`, {
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 }
             })
             .then(response => {
@@ -524,7 +523,7 @@
             
             console.log('Enviando busca de fornecedores com termo:', termo);
             
-            fetch('/home/fornecedor/search', {
+            fetch(`/fornecedor/search`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': token,
@@ -615,7 +614,7 @@
             const quantidade = document.getElementById('quantidade').value.trim();
             const precoCusto = document.getElementById('precoCusto').value.trim();
             const precoVenda = document.getElementById('precoVenda').value.trim();
-            const dataEntrada = document.getElementById('dataEntrada').value.trim();
+            const dataEntrada = document
 
             if (!codigo || !produto || !idFornecedor || !quantidade || !precoCusto) {
                 mostrarErro('Por favor, preencha todos os campos obrigatórios.');
