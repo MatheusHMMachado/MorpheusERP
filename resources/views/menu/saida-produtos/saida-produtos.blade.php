@@ -397,7 +397,7 @@
             
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             
-            fetch('/home/produtos/search?termo=' + encodeURIComponent(termo), {
+            fetch(`/produtos/search?termo=${encodeURIComponent(termo)}`, {
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': token,
@@ -622,7 +622,7 @@
             formData.append('data_Saida', new Date().toISOString().split('T')[0]);
             formData.append('observacao', observacao);
     
-            fetch('/home/saida-produtos/store', {
+            fetch('{{ route("saida-produto.store") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': token,
