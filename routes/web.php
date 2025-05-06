@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/search', [FornecedorController::class, 'search'])->name('menu.fornecedor.search');
         Route::get('/editar', [FornecedorController::class, 'showEditar'])->name('menu.fornecedor.fornecedor-editar');
         Route::post('/update', [FornecedorController::class, 'update'])->name('menu.fornecedor.fornecedor-update');
+        Route::post('/find', [FornecedorController::class, 'find'])->name('menu.fornecedor.find');
     });
     
     // Local de Destino
