@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Models\LocalDestino;
+use App\Models\Menu\LocalDestino;
 
 class LocalDestinoController extends Controller
 {
