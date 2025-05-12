@@ -1,108 +1,80 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>MorpheusERP - Cadastro de Produtos</title>
-    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+@extends('layouts.app')
 
-    @include('layouts.nav_bottom')
-    @include('layouts.background')
-    
+@section('title', 'Cadastro de Produtos')
+
+@section('header-title', 'Cadastro de Produtos')
+
+@push('styles')
     @vite(['resources/css/menu/produtos/produtos.css'])
-</head>
-<body>
-    <div class="header">
-        <h1>Cadastro de Produtos</h1>
-    </div>
-    
-    <div class="container">
-        <div class="form">
-            <div class="buttons" id="default-buttons">
-                <button class="new" onclick="novo()">
-                    <i class="fas fa-plus-circle"></i> Novo
-                </button>
-                <button class="search" onclick="window.location.href='{{ route('menu.produtos.produtos-buscar') }}'">
-                    <i class="fas fa-search"></i> Buscar
+@endpush
+
+@section('content')
+    <div class="form">
+        <div class="buttons" id="default-buttons">
+            <button class="new" onclick="novo()">
+                <i class="fas fa-plus-circle"></i> Novo
+            </button>
+            <button class="search" onclick="window.location.href='{{ route('menu.produtos.produtos-buscar') }}'">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+        </div>
+        <div class="Conteudo">
+            <div class="buttons" id="new-button" style="display: none;">
+                <button class="back" onclick="voltar(); recarregarPagina()">
+                    <i class="fas fa-arrow-left"></i> Voltar
                 </button>
             </div>
-            
-            <div class="Conteudo">
-                <div class="buttons" id="new-button" style="display: none;">
-                    <button class="back" onclick="voltar(); recarregarPagina()">
-                        <i class="fas fa-arrow-left"></i> Voltar
+            <form id="produtoForm" autocomplete="off" enctype="multipart/form-data">
+                <div class="image-placeholder">
+                    <input type="file" id="imagem" accept="image/*" style="display: none;" onchange="exibirImagem(this)" disabled>
+                    <img id="preview" src="{{ asset('images/defaultimg.png') }}" class="image-disabled">
+                    <label for="imagem" class="botao-upload">Selecionar Imagem</label>
+                </div>
+                <input type="number" id="codigo" class="input-field" maxlength="5" placeholder="* Código" required disabled>
+                <input type="text" id="produto" class="input-field" maxlength="50" placeholder="* Nome do Produto" required disabled>
+                <div class="container2">
+                    <div class="coluna1">
+                        <select id="tipoQuantidade" required disabled>
+                            <option value="" disabled selected>Selecione o tipo</option>
+                            <option value="Quilo">Quilos(KG)</option>
+                            <option value="Caixa">Caixas(CX)</option>
+                            <option value="Unidade">Unidades(UN)</option>
+                            <option value="Saco">Sacos(SC)</option>
+                        </select>
+                        <input type="number" id="pcusto" step="0.01" class="input-field" placeholder="Preço de Custo" required disabled>
+                        <input type="text" id="grupo" class="input-field" maxlength="15" placeholder="* Grupo" required disabled>
+                    </div>
+                    <div class="coluna2">
+                        <input type="number" id="barras" class="input-field" maxlength="15" placeholder="Cod. de Barras" disabled>
+                        <input type="number" id="pvenda" step="0.01" class="input-field" placeholder="Preço de Venda" disabled>
+                        <input type="text" id="subgrupo" class="input-field" maxlength="15" placeholder="Sub. Grupo" disabled>
+                    </div>
+                </div>
+                <textarea id="observacao" maxlength="150" placeholder="Observações" disabled></textarea>
+                <div class="buttons-edit" id="edit-buttons" style="display: none;">
+                    <button class="edit" type="submit">
+                        <i class="fas fa-save"></i> Salvar
                     </button>
                 </div>
-                
-                <form id="produtoForm" autocomplete="off" enctype="multipart/form-data">
-                    <!--Aqui a imagem é inserida-->
-                    <div class="image-placeholder">
-                        <input type="file" id="imagem" accept="image/*" style="display: none;" onchange="exibirImagem(this)" disabled>
-                        <img id="preview" src="{{ asset('images/defaultimg.png') }}" class="image-disabled">
-                        <label for="imagem" class="botao-upload">Selecionar Imagem</label>
-                    </div>
-
-                    <input type="number" id="codigo" class="input-field" maxlength="5" placeholder="* Código" required disabled>
-                    <input type="text" id="produto" class="input-field" maxlength="50" placeholder="* Nome do Produto" required disabled>
-                    
-                    <div class="container2">
-                        <div class="coluna1">
-                            <select id="tipoQuantidade" required disabled>
-                                <option value="" disabled selected>Selecione o tipo</option>
-                                <option value="Quilo">Quilos(KG)</option>
-                                <option value="Caixa">Caixas(CX)</option>
-                                <option value="Unidade">Unidades(UN)</option>
-                                <option value="Saco">Sacos(SC)</option>
-                            </select>
-                        
-                            <input type="number" id="pcusto" step="0.01" class="input-field" placeholder="Preço de Custo" required disabled>
-                            <input type="text" id="grupo" class="input-field" maxlength="15" placeholder="* Grupo" required disabled>
-                        </div>
-                        <div class="coluna2">
-                            <input type="number" id="barras" class="input-field" maxlength="15" placeholder="Cod. de Barras" disabled>
-                            <input type="number" id="pvenda" step="0.01" class="input-field" placeholder="Preço de Venda" disabled>
-                            <input type="text" id="subgrupo" class="input-field" maxlength="15" placeholder="Sub. Grupo" disabled>
-                        </div>
-                    </div>
-                    
-                    <textarea id="observacao" maxlength="150" placeholder="Observações" disabled></textarea>
-
-                    <div class="buttons-edit" id="edit-buttons" style="display: none;">
-                        <button class="edit" type="submit">
-                            <i class="fas fa-save"></i> Salvar
-                        </button>
-                    </div>
-                </form>
-                
-                <div id="mensagemSucesso" style="display: none;"></div>
-                <div id="mensagemErro" style="display: none;"></div>
-            </div>
+            </form>
+            <div id="mensagemSucesso" style="display: none;"></div>
+            <div id="mensagemErro" style="display: none;"></div>
         </div>
     </div>
-
-    <footer>
-        <div class="BotoesFooter">
-            <div class="buttons-search">
-                <a href="{{ route('home') }}">
-                   <button class="search">
-                        <i class="fas fa-home"></i> Voltar para Home
-                   </button>
-                </a>
-            </div>
+@endsection
+@section('footer')
+    <div class="BotoesFooter">
+        <div class="buttons-search">
+            <a href="{{ route('home') }}">
+                <button class="search">
+                    <i class="fas fa-home"></i> Voltar para Home
+                </button>
+            </a>
         </div>
-    </footer>
-    
-    <div class="logo">
-        <img src="{{ asset('images/Emporio maxx s-fundo.png') }}" alt="Empório Maxx Logo">
     </div>
-
-    <!-- Scripts -->
-    <script> 
+@endsection
+@push('scripts')
+<script>
         function novo() {
             document.getElementById('default-buttons').style.display = 'none';
             document.getElementById('new-button').style.display = 'flex';
@@ -292,5 +264,5 @@
             // Verificação de login agora é feita pelo Laravel middleware
         });
     </script>
-</body>
-</html>
+@endpush
+
