@@ -23,7 +23,7 @@
             </div>
             
             <div class="date-selector">
-                <input type="date" id="datePicker" aria-label="Selecione uma Data" />
+                <input type="date" id="datePicker" aria-label="Selecione uma Data" disabled/>
             </div>
             
             <div class="container">
