@@ -160,10 +160,10 @@ select {
 
 /* Container for product details */
 .container2 {
-    display: flex;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
-    margin-bottom: 15px;
+    width: 100%;
 }
 
 .coluna1, .coluna2 {
@@ -259,25 +259,31 @@ select {
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--accent-color);
-    color: var(--text-dark);
-    border: none;
+    padding: 0;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: var(--accent-color);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
-    padding: 0;
-    z-index: 2;
+    font-size: 18px;
+}
+
+.search-button i {
+    color: var(--text-dark);
+    font-size: 18px;
 }
 
 .search-button:hover {
     transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: #ffe600;
 }
 
 .search-button:active {
@@ -437,6 +443,164 @@ footer {
 
 .close:hover {
     color: white;
+}
+
+/* --- Inline CSS removido dos arquivos Blade de saida-produtos --- */
+
+/* Fix for search button alignment */
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    background: var(--accent-color);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+.search-button i {
+    color: var(--text-dark);
+    font-size: 18px;
+}
+
+.search-button:hover {
+    transform: translateY(-50%) scale(1.05);
+    background: #ffe600;
+}
+
+.search-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.search-button::before {
+    display: none;
+}
+
+/* Improved layout for the form */
+.container2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .container2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Fix for product/local search results */
+#produtosTable, #locaisTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#produtosTable thead th, #locaisTable thead th {
+    background-color: rgba(255, 239, 13, 0.2);
+    color: var(--accent-color);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#produtosTable tbody tr, #locaisTable tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+#produtosTable tbody tr:hover, #locaisTable tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#produtosTable td, #locaisTable td {
+    padding: 12px 15px;
+    color: var(--input-text);
+}
+
+#produtoSearchResults, #localSearchResults {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Responsive table styles */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+#resultadoTabela {
+    min-width: 500px;
+}
+
+#resultadoTabela th:nth-child(1), 
+#resultadoTabela td:nth-child(1) {
+    width: 15%;
+}
+#resultadoTabela th:nth-child(2), 
+#resultadoTabela td:nth-child(2) {
+    width: 30%;
+}
+#resultadoTabela th:nth-child(3), 
+#resultadoTabela td:nth-child(3) {
+    width: 30%;
+}
+#resultadoTabela th:nth-child(4), 
+#resultadoTabela td:nth-child(4) {
+    width: 10%;
+}
+#resultadoTabela th:nth-child(5), 
+#resultadoTabela td:nth-child(5) {
+    width: 15%;
+}
+
+@media (max-width: 768px) {
+    .modal-content-Produto {
+        width: 95%;
+        padding: 15px;
+        margin: 5% auto;
+    }
+    #modalImagem {
+        max-width: 120px;
+    }
+}
+
+/* Fix for edit button in editar */
+.buttons-edit {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.buttons-edit button {
+    width: 100%;
+    max-width: 300px;
+    height: 50px;
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 /* Media queries */
