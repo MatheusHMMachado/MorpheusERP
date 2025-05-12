@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Entrada de Produtos')
+
 @section('header-title', 'Entrada de Produtos')
 
 @push('styles')
