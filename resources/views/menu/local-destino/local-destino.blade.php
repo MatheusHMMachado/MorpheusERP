@@ -16,25 +16,6 @@
     
     @vite(['resources/css/menu/local-destino/local-destino.css'])
 
-    <script>
-        //Função para verificar se o usuário está logado
-        function verificarLogin() {
-            fetch('../../../Backend/verificalogin.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.logado) {
-                        // Redireciona para a página de login se não estiver logado
-                        window.location.href = '../../../index.html';
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao verificar autenticação:", error);
-                });
-        }
-
-        // Executa a função quando a página é carregada
-        document.addEventListener("DOMContentLoaded", verificarLogin);
-    </script>
 </head>
 <body>
     <div class="header">
