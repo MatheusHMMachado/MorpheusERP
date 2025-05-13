@@ -10,13 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     @include('layouts.nav_bottom')
     @include('layouts.background')
 
     @stack('styles')
 
 </head>
-<body>
+<body class="Fundo">
     <div class="header">
         <h1>@yield('header-title', 'MorpheusERP')</h1>
     </div>
