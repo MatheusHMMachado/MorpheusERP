@@ -1,103 +1,78 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Relatório de Saída de Produtos</title>
-    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+@extends('layouts.app')
 
-    @include('layouts.nav_bottom')
-    @include('layouts.background')
-    
+@section('title', 'Relatório de Saída de Produtos')
+
+@push('styles')
     @vite(['resources/css/menu/relatorio/produtos-relatorio.css'])
-</head>
-<body>
-    <div class="header">
-        <h1>Relatório de Saída de Produtos</h1>
-    </div>
-    <div class="container">
-        <div class="form">
-            <div class="Conteudo">
-                <form id="consultaForm" autocomplete="off">
-                    <div class="search-fields">
-                        <div class="input-containe search-container">
-                            <input type="date" id="start_date" class="input-field" placeholder="Data Inicial" required>
-                        </div>
-                        
-                        <div class="input-containe search-container">
-                            <input type="date" id="end_date" class="input-field" placeholder="Data Final" required>
-                        </div>
+@endpush
+
+@section('header-title', 'Relatório de Saída de Produtos')
+
+@section('content')
+    <div class="form">
+        <div class="Conteudo">
+            <form id="consultaForm" autocomplete="off">
+                <div class="search-fields">
+                    <div class="input-containe search-container">
+                        <input type="date" id="start_date" class="input-field" placeholder="Data Inicial" required>
                     </div>
-                    
-                    <div class="search-fields">
-                        <div class="input-containe search-container">
-                            <input type="text" id="nomeProduto" class="input-field" placeholder="Nome do Produto">
-                            <div class="search-button" onclick="buscarSaidas()">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="input-containe search-container">
-                            <input type="text" id="nomeLocal" class="input-field" placeholder="Local de Destino">
-                            <div class="search-button" onclick="buscarSaidas()">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
+                    <div class="input-containe search-container">
+                        <input type="date" id="end_date" class="input-field" placeholder="Data Final" required>
                     </div>
-                    
-                    <div class="search-fields">
-                        <div class="input-containe search-container">
-                            <input type="text" id="grupo" class="input-field" placeholder="Grupo">
-                            <div class="search-button" onclick="buscarSaidas()">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="input-containe search-container">
-                            <input type="text" id="subgrupo" class="input-field" placeholder="Subgrupo">
-                            <div class="search-button" onclick="buscarSaidas()">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                
-                <div id="mensagemErro" style="display: none;"></div>
-                
-                <div class="buttons-search">
-                    <button id="btnBuscar" class="new" onclick="buscarSaidas()">
-                        <i class="fas fa-search"></i> Buscar
-                    </button>
-                    <button id="btnGerarPDF" class="new" style="margin-left: 10px; display: none;">
-                        <i class="fas fa-file-pdf"></i> Gerar PDF
-                    </button>
                 </div>
-                
-                <div id="resultado-container" class="resultado-container" style="display: none;">
-                    <div class="resultado-titulo">Resultados da Busca</div>
-                    <table id="tabelaSaidas">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Data</th>
-                                <th>Valor Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="corpoTabela"></tbody>
-                    </table>
+                <div class="search-fields">
+                    <div class="input-containe search-container">
+                        <input type="text" id="nomeProduto" class="input-field" placeholder="Nome do Produto">
+                        <div class="search-button" onclick="buscarSaidas()">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="input-containe search-container">
+                        <input type="text" id="nomeLocal" class="input-field" placeholder="Local de Destino">
+                        <div class="search-button" onclick="buscarSaidas()">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
                 </div>
+                <div class="search-fields">
+                    <div class="input-containe search-container">
+                        <input type="text" id="grupo" class="input-field" placeholder="Grupo">
+                        <div class="search-button" onclick="buscarSaidas()">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="input-containe search-container">
+                        <input type="text" id="subgrupo" class="input-field" placeholder="Subgrupo">
+                        <div class="search-button" onclick="buscarSaidas()">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div id="mensagemErro" style="display: none;"></div>
+            <div class="buttons-search">
+                <button id="btnBuscar" class="new" onclick="buscarSaidas()">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+                <button id="btnGerarPDF" class="new" style="margin-left: 10px; display: none;">
+                    <i class="fas fa-file-pdf"></i> Gerar PDF
+                </button>
+            </div>
+            <div id="resultado-container" class="resultado-container" style="display: none;">
+                <div class="resultado-titulo">Resultados da Busca</div>
+                <table id="tabelaSaidas">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Data</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabela"></tbody>
+                </table>
             </div>
         </div>
     </div>
-
     <!-- Modal para detalhes da saída -->
     <div id="saidaModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);">
         <div style="background-color: rgba(40, 0, 153, 0.9); margin: 15% auto; padding: 20px; border-radius: 15px; width: 80%; max-width: 500px; position: relative;">
@@ -122,24 +97,24 @@
             </div>
         </div>
     </div>
+@endsection
 
-    <footer>
-        <div class="BotoesFooter">
-            <div class="buttons-footer">
-                <a href="{{ route('menu.relatorio.relatorio') }}" class="back-link">
-                    <button class="search">
-                        <i class="fas fa-arrow-left"></i> Voltar
-                    </button>
-                </a>
-            </div>
+@section('footer')
+    <div class="BotoesFooter">
+        <div class="buttons-footer">
+            <a href="{{ route('menu.relatorio.relatorio') }}" class="back-link">
+                <button class="search">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+            </a>
         </div>
-    </footer>
-
-    <div class="logo">
-        <img src="{{ asset('images/Emporio maxx s-fundo.png') }}" alt="Empório Maxx Logo">
     </div>
+@endsection
 
-    <script>
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script>
         // Variáveis para armazenar os resultados
         let todasSaidas = [];
         let produtosSaida = [];
@@ -619,5 +594,4 @@
             doc.save(`Saida_${lote.id_Saida}_${dataAtual}.pdf`);
         }
     </script>
-</body>
-</html>
+@endpush
