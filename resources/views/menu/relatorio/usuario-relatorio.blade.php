@@ -294,7 +294,7 @@
         usuarios.forEach(usuario => {
             const linha = document.createElement('tr');
             
-            linha.innerHTML = `<td>${usuario.nome}</td><td>${usuario.email}</td><td>${formatarTipoUsuario(usuario.tipo)}</td>`;
+            linha.innerHTML = `<td>${usuario.nome_Usuario}</td><td>${usuario.email}</td><td>${formatarTipoUsuario(usuario.tipo_Usuario)}</td>`;
             
             corpoTabela.appendChild(linha);
         });

@@ -157,14 +157,7 @@ function buscarFornecedores() {
     const nomeFantasia = document.getElementById('nomeFantasia').value.trim();
     const grupo = document.getElementById('grupo').value.trim();
     const subgrupo = document.getElementById('subgrupo').value.trim();
-    if (!razaoSocial && !nomeFantasia && !grupo && !subgrupo) {
-        mostrarErro('Por favor, preencha pelo menos um campo de pesquisa');
-        searchButtons.forEach(button => {
-            button.innerHTML = '<i class="fas fa-search"></i>';
-            button.disabled = false;
-        });
-        return;
-    }
+
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     fetch('{{ route("menu.relatorio.fornecedores.search") }}', {
         method: 'POST',
@@ -214,19 +207,14 @@ function exibirResultados(fornecedores) {
     const corpoTabela = document.getElementById('corpoTabela');
     const resultadoContainer = document.getElementById('resultado-container');
     corpoTabela.innerHTML = '';
-    if (!fornecedores || fornecedores.length === 0) {
-        resultadoContainer.style.display = 'none';
-        mostrarErro('Nenhum fornecedor encontrado com os critérios informados');
-        return;
-    }
     fornecedores.forEach(fornecedor => {
         const linha = document.createElement('tr');
         linha.innerHTML = `
-            <td>${fornecedor.id_Fornecedor || ''}</td>
-            <td>${fornecedor.razao_Social || ''}</td>
-            <td>${fornecedor.nome_Fantasia || ''}</td>
-            <td>${fornecedor.grupo || ''}</td>
-            <td>${fornecedor.sub_Grupo || ''}</td>
+            <td>${fornecedor.id_Fornecedor || '---'}</td>
+            <td>${fornecedor.razao_Social || '---'}</td>
+            <td>${fornecedor.nome_Fantasia || '---'}</td>
+            <td>${fornecedor.grupo || '---'}</td>
+            <td>${fornecedor.sub_Grupo || '---'}</td>
         `;
         corpoTabela.appendChild(linha);
     });
