@@ -139,14 +139,6 @@ function buscarLocais() {
     });
     const nomeLocal = document.getElementById('nomeLocal').value.trim();
     const tipoLocal = document.getElementById('tipoLocal').value.trim();
-    if (!nomeLocal && !tipoLocal) {
-        mostrarErro('Por favor, preencha pelo menos um campo de pesquisa');
-        searchButtons.forEach(button => {
-            button.innerHTML = '<i class="fas fa-search"></i>';
-            button.disabled = false;
-        });
-        return;
-    }
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     fetch('{{ route("menu.relatorio.locais.search") }}', {
         method: 'POST',
@@ -194,16 +186,11 @@ function exibirResultados(locais) {
     const corpoTabela = document.getElementById('corpoTabela');
     const resultadoContainer = document.getElementById('resultado-container');
     corpoTabela.innerHTML = '';
-    if (!locais || locais.length === 0) {
-        resultadoContainer.style.display = 'none';
-        mostrarErro('Nenhum local encontrado com os critérios informados');
-        return;
-    }
     locais.forEach(local => {
         const linha = document.createElement('tr');
-        const nomeLocal = local.nome_Local || '';
-        const tipoLocal = local.tipo_Local || '';
-        const observacao = local.observacao || '';
+        const nomeLocal = local.nome_Local || '---';
+        const tipoLocal = local.tipo_Local || '---';
+        const observacao = local.observacao || '---';
         linha.innerHTML = `
             <td>${local.id_Local || ''}</td>
             <td ${nomeLocal.length > 20 ? `data-content="${nomeLocal}"` : ''}>${nomeLocal}</td>
