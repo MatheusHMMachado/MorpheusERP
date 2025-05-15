@@ -43,7 +43,7 @@
             </form>
             <div id="mensagemErro" style="display: none;"></div>
             <div class="buttons-container" style="margin: 15px 0; display: flex; justify-content: flex-end;">
-                <button id="btnGerarPDF" class="new" disabled>
+                <button id="btnGerarPDF" class="new">
                     <i class="fas fa-file-pdf"></i> Gerar PDF
                 </button>
             </div>
@@ -122,21 +122,13 @@
         document.getElementById('mensagemErro').style.display = 'none';
         const searchButtons = document.querySelectorAll('.search-button');
         searchButtons.forEach(button => {
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         });
         const codProduto = document.getElementById('codProduto').value.trim();
         const nomeProduto = document.getElementById('nomeProduto').value.trim();
         const grupo = document.getElementById('grupo').value.trim();
         const subgrupo = document.getElementById('subgrupo').value.trim();
-        if (!codProduto && !nomeProduto && !grupo && !subgrupo) {
-            mostrarErro('Por favor, preencha pelo menos um campo de pesquisa');
-            searchButtons.forEach(button => {
-                button.innerHTML = '<i class="fas fa-search"></i>';
-                button.disabled = false;
-            });
-            return;
-        }
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         fetch('{{ route("menu.relatorio.produtos.search") }}', {
             method: 'POST',
@@ -186,19 +178,15 @@
         const corpoTabela = document.getElementById('corpoTabela');
         const resultadoContainer = document.getElementById('resultado-container');
         corpoTabela.innerHTML = '';
-        if (!produtos || produtos.length === 0) {
-            resultadoContainer.style.display = 'none';
-            return;
-        }
         resultadoContainer.style.display = 'block';
         produtos.forEach(produto => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${produto.codigo}</td>
-                <td>${produto.nome}</td>
-                <td>${produto.preco_custo}</td>
-                <td>${produto.preco_venda}</td>
-                <td>${produto.grupo}</td>
+                <td>${produto.cod_Produto || '---'}</td>
+                <td>${produto.nome_Produto || '---'}</td>
+                <td>${produto.preco_Custo || '---'}</td>
+                <td>${produto.preco_Venda || '---'}</td>
+                <td>${produto.grupo || '---'}</td>
             `;
             corpoTabela.appendChild(row);
         });

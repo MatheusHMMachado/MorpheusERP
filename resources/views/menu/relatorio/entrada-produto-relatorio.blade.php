@@ -3,7 +3,7 @@
 @section('title', 'Relatório de Entrada de Produtos')
 
 @push('styles')
-    @vite(['resources/css/menu/relatorio/produtos-relatorio.css'])
+    @vite(['resources/css/menu/relatorio/entrada-produtos-relatorio.css'])
 @endpush
 
 @section('header-title', 'Relatório de Entrada de Produtos')
@@ -23,38 +23,35 @@
                 <div class="search-fields">
                     <div class="input-containe search-container">
                         <input type="text" id="nomeProduto" class="input-field" placeholder="Nome do Produto">
-                        <div class="search-button" onclick="buscarEntradas()">
+                        <button type="button" class="search-button" onclick="buscarEntradas()">
                             <i class="fas fa-search"></i>
-                        </div>
+                        </button>
                     </div>
                     <div class="input-containe search-container">
                         <input type="text" id="fornecedor" class="input-field" placeholder="Fornecedor">
-                        <div class="search-button" onclick="buscarEntradas()">
+                        <button type="button" class="search-button" onclick="buscarEntradas()">
                             <i class="fas fa-search"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div class="search-fields">
                     <div class="input-containe search-container">
                         <input type="text" id="grupo" class="input-field" placeholder="Grupo">
-                        <div class="search-button" onclick="buscarEntradas()">
+                        <button type="button" class="search-button" onclick="buscarEntradas()">
                             <i class="fas fa-search"></i>
-                        </div>
+                        </button>
                     </div>
                     <div class="input-containe search-container">
                         <input type="text" id="subgrupo" class="input-field" placeholder="Subgrupo">
-                        <div class="search-button" onclick="buscarEntradas()">
+                        <button type="button" class="search-button" onclick="buscarEntradas()">
                             <i class="fas fa-search"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </form>
             <div id="mensagemErro" style="display: none;"></div>
             <div class="buttons-search">
-                <button id="btnBuscar" class="new" onclick="buscarEntradas()">
-                    <i class="fas fa-search"></i> Buscar
-                </button>
-                <button id="btnGerarPDF" class="new" style="margin-left: 10px; display: none;">
+                <button id="btnGerarPDF" class="new" style="margin-left: 10px;">
                     <i class="fas fa-file-pdf"></i> Gerar PDF
                 </button>
             </div>
@@ -74,24 +71,24 @@
         </div>
     </div>
     <!-- Modal para detalhes da entrada -->
-    <div id="entradaModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);">
-        <div style="background-color: rgba(40, 0, 153, 0.9); margin: 15% auto; padding: 20px; border-radius: 15px; width: 80%; max-width: 500px; position: relative;">
-            <span style="color: #FFEF0D; float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="fecharModal()">&times;</span>
-            <h2 style="color: #FFEF0D; text-align: center;">Detalhes da Entrada</h2>
+    <div id="entradaModal" class="entrada-modal-bg" role="dialog" aria-modal="true" aria-labelledby="entradaModalTitle" tabindex="-1">
+        <div class="entrada-modal-content">
+            <button type="button" class="entrada-modal-close" aria-label="Fechar detalhes" onclick="fecharModal()">&times;</button>
+            <h2 id="entradaModalTitle">Detalhes da Entrada</h2>
             <div>
-                <div style="margin-bottom: 10px;">
-                    <label style="display: inline-block; width: 130px; color: white;">Código:</label>
-                    <input id="modalCodigo" disabled style="width: calc(100% - 135px); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.3); background-color: rgba(255, 255, 255, 0.1); color: white;">
+                <div class="entrada-modal-field">
+                    <label for="modalCodigo" class="entrada-modal-label">Código:</label>
+                    <input id="modalCodigo" class="entrada-modal-input" disabled>
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <label style="display: inline-block; width: 130px; color: white;">Data:</label>
-                    <input id="modalData" disabled style="width: calc(100% - 135px); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.3); background-color: rgba(255, 255, 255, 0.1); color: white;">
+                <div class="entrada-modal-field">
+                    <label for="modalData" class="entrada-modal-label">Data:</label>
+                    <input id="modalData" class="entrada-modal-input" disabled>
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <label style="display: inline-block; width: 130px; color: white;">Valor Total:</label>
-                    <input id="modalValor" disabled style="width: calc(100% - 135px); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.3); background-color: rgba(255, 255, 255, 0.1); color: white;">
+                <div class="entrada-modal-field">
+                    <label for="modalValor" class="entrada-modal-label">Valor Total:</label>
+                    <input id="modalValor" class="entrada-modal-input" disabled>
                 </div>
-                <button id="btnDetalhesPDF" style="width: 100%; margin-top: 20px; padding: 10px; background-color: #FF5252; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                <button id="btnDetalhesPDF">
                     <i class="fas fa-file-pdf"></i> Gerar PDF Detalhado
                 </button>
             </div>
@@ -225,9 +222,8 @@
             searchButtons.forEach(button => {
                 button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
                 button.style.pointerEvents = 'none';
+                button.disabled = true;
             });
-            document.getElementById('btnBuscar').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
-            document.getElementById('btnBuscar').disabled = true;
             
             // Obter o token CSRF
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -266,9 +262,8 @@
                 searchButtons.forEach(button => {
                     button.innerHTML = '<i class="fas fa-search"></i>';
                     button.style.pointerEvents = 'auto';
+                    button.disabled = false;
                 });
-                document.getElementById('btnBuscar').innerHTML = '<i class="fas fa-search"></i> Buscar';
-                document.getElementById('btnBuscar').disabled = false;
                 
                 if (data.status === 'success') {
                     todasEntradas = data.entradas || [];
@@ -294,9 +289,8 @@
                 searchButtons.forEach(button => {
                     button.innerHTML = '<i class="fas fa-search"></i>';
                     button.style.pointerEvents = 'auto';
+                    button.disabled = false;
                 });
-                document.getElementById('btnBuscar').innerHTML = '<i class="fas fa-search"></i> Buscar';
-                document.getElementById('btnBuscar').disabled = false;
                 
                 mostrarErro('Erro ao consultar entradas: ' + error.message);
             });
@@ -345,19 +339,15 @@
         // Função para abrir modal com detalhes da entrada
         function abrirDetalhes(entrada) {
             entradaSelecionada = entrada;
-            
             // Preencher os campos do modal
             document.getElementById('modalCodigo').value = entrada.id_Entrada || '';
             document.getElementById('modalData').value = formatarData(entrada.data_Entrada);
             document.getElementById('modalValor').value = formatarMoeda(entrada.valor_Total);
-            
             // Mostrar indicador de carregamento
             document.getElementById('btnDetalhesPDF').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
             document.getElementById('btnDetalhesPDF').disabled = true;
-            
             // Obter o token CSRF
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            
             // Buscar detalhes dos produtos dessa entrada
             fetch('{{ route("menu.relatorio.entradas.detalhes") }}', {
                 method: 'POST',
@@ -371,17 +361,18 @@
             .then(data => {
                 document.getElementById('btnDetalhesPDF').innerHTML = '<i class="fas fa-file-pdf"></i> Gerar PDF Detalhado';
                 document.getElementById('btnDetalhesPDF').disabled = false;
-                
                 if (data.status === 'success') {
                     produtosEntrada = data.produtos || [];
-                    
-                    // Configurar o botão para gerar PDF detalhado
                     document.getElementById('btnDetalhesPDF').onclick = function() {
                         gerarPDFDetalhado(produtosEntrada, entrada);
                     };
-                    
-                    // Exibir o modal
-                    document.getElementById('entradaModal').style.display = 'block';
+                    // Exibir o modal com classe ativa e foco
+                    const modal = document.getElementById('entradaModal');
+                    modal.classList.add('active');
+                    modal.style.display = '';
+                    setTimeout(() => {
+                        modal.querySelector('.entrada-modal-close').focus();
+                    }, 100);
                 } else {
                     mostrarErro(data.message || 'Erro ao buscar detalhes da entrada');
                 }
@@ -389,7 +380,6 @@
             .catch(error => {
                 document.getElementById('btnDetalhesPDF').innerHTML = '<i class="fas fa-file-pdf"></i> Gerar PDF Detalhado';
                 document.getElementById('btnDetalhesPDF').disabled = false;
-                
                 console.error('Erro:', error);
                 mostrarErro('Erro ao buscar detalhes: ' + error.message);
             });
@@ -397,16 +387,24 @@
         
         // Função para fechar o modal
         function fecharModal() {
-            document.getElementById('entradaModal').style.display = 'none';
+            const modal = document.getElementById('entradaModal');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
         }
         
-        // Fechar o modal ao clicar fora dele
+        // Fechar o modal ao clicar fora dele ou pressionar ESC
         window.onclick = function(event) {
             const modal = document.getElementById('entradaModal');
             if (event.target === modal) {
                 fecharModal();
             }
         };
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('entradaModal');
+            if (modal.classList.contains('active') && (e.key === 'Escape' || e.key === 'Esc')) {
+                fecharModal();
+            }
+        });
         
         // Função para gerar PDF com resumo das entradas
         function gerarPDFResumo(entradas) {
